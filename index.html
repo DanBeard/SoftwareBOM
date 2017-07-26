@@ -1,0 +1,260 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Embedded Linux Software BOM</h1>
+					<h3></h3>
+					<p>
+						<small>Created by <a href="http://varx.org">Daniel Beard</a> / <a href="https://twitter.com/danielibeard">@danielibeard</a></small>
+					</p>
+				</section>
+				<section>
+					<h2>Who Am I?</h2>
+					<div style="float:left">
+						<ul>
+							<li> Cofounder - Promenade Software, Inc. <ul>
+								<li>Boutique Medical Device Software Services</li>
+							</ul></li>
+							<li> Cofounder - MedISAO
+								<ul>
+									<li> Information sharing for small-to-medium manufacturers</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					<div>
+						<img src="images/me.jpg" />
+					</div>
+				</section>
+				<section>
+					<h2> Talk Goals </h2>
+					<p >  Solve <strong>technical</strong> problems with generating & using software BOMs using FOSS tools</p>
+				</section>
+				<section>
+					<h2> Terms </h2>
+					<h3> Bill of Materials (BOM) </h3>
+					<p style="text-align: left">  A list of the raw materials, sub-assemblies, intermediate assemblies, sub-components, parts and the quantities of each needed to manufacture an end product  </p>
+				</section>
+				<section>
+					<h2> Terms </h2>
+					<h3> Software (In the age of IoT) </h3>
+					<p style="text-align: left">
+						A <em>magic</em> box running a <em>10 year old OS</em>, using <em>out-of-date 3rd party libraries</em>, <em>hard coded credentials</em> and an internet connection that can affect the real world
+					</p>
+				</section>
+				<section>
+					<h2> Terms </h2>
+					<h3> Software BOM </h3>
+					<p style="text-align: left">
+						A list of 3rd party libraries and their version numbers.
+					</p>
+				</section>
+				<section>
+					<h2> Why? </h2>
+				</section>
+				<section>
+					<h2> Customer's IT likes it  </h2>
+					<img src="images/blackbox.gif" />
+
+					<h3> Attach this to your network </h3>
+					<p>
+						KTHNXBYE
+					</p>
+				</section>
+				<section>
+					<h2> Helps you keep up to date  </h2>
+					<img src="images/update.png" />
+
+
+				</section>
+				<section>
+					<h2> Lawyers like it  </h2>
+					<img src="images/lawyer.jpg" />
+
+					<p>
+						What open source libraries are you using?
+					</p>
+				</section>
+				<section>
+					<section>
+						<h2> How? </h2>
+					</section>
+					<section>
+						<h2> Ask your software engineers  </h2>
+						<img src="images/programmer.jpg" style="width:500px" />
+
+						<p> Humans are lazy & error prone  </p>
+					</section>
+					<section>
+						<h2> Ask your build system </h2>
+						<ol>
+							<li> Java
+								<ul>
+									<li><code>mvn dependency:tree</code></li>
+									<li><code>gradle app:dependencies</code></li>
+								</ul>
+							</li>
+							<li> Python
+								<ul>
+									<li><code>pip freeze</code></li>
+								</ul>
+							</li>
+							<li> Node
+								<ul>
+									<li><code>npm list</code></li>
+								</ul>
+							</li>
+							<li> C#
+								<ul>
+									<li><code>References XML</code></li>
+								</ul>
+							</li>
+							<li> C/C++
+								<ul>
+									<li><code>Makefile</code></li>
+								</ul>
+							</li>
+						</ol>
+					</section>
+					<section>
+						<h2> Ask your build system </h2>
+						<ol>
+							<li> Yocto
+								<ul>
+									<li><code>buildhistory</code></li>
+								</ul>
+							</li>
+							<li> Buildroot
+								<ul>
+									<li><code>make legal-info</code></li>
+								</ul>
+						</ol>
+					</section>
+					<section>
+						<h2> Ask your OS / Package manager </h2>
+						<ol>
+							<li> Linux
+								<ul>
+									<li><code>rpm -qa</code></li>
+									<li><code>apt list --installed</code></li>
+									<li><code>dpkg --list</code></li>
+									<li><code>yum list</code></li>
+								</ul>
+							</li>
+							<li> Windows
+								<ul>
+									<li><code>wmic <br/>
+										/output:C:\InstallList.txt product list BRIEF /format:csv</code></li>
+								</ul>
+						</ol>
+					</section>
+					<section>
+					<h2> Ask your filesystem </h2>
+					<ul>
+						<li> Linux
+							<ul>
+								<li><code>find /lib</code></li>
+								<li><code>find /usr/lib</code></li>
+								<li>
+									<pre>
+/lib/libjpeg.so.62.0.0
+/lib/libcrypt.so.1
+/lib/libm.so.6
+/lib/libjson.so.0
+/lib/libjpeg.so.62
+/lib/libiconv.so.2
+/lib/libgcc_s.so.1
+...
+									</pre>
+								</li>
+							</ul>
+						</li>
+					</ul>
+						</section>
+					<section>
+						<h2> How? </h2>
+						<ol>
+							<li> Ask your software engineers. </li>
+							<li> Ask your build system. </li>
+							<li> Ask your OS / package manager. </li>
+							<li> Ask your filesystem. </li>
+						</ol>
+					</section>
+				</section>
+
+				</section>
+				<section>
+					<h3> Now you have a Software BOM</h3>
+					<img src="images/yay.jpg" />
+				</section>
+				<section>
+					<section>
+						<h3> Let's do a search </h3>
+						<img src="images/nvd.png" />
+					</section>
+					<section>
+						<h4> www.devicevulnerabilitychecker.com </h4>
+						<img src="images/dvc1.png" />
+					</section>
+					<section>
+						<h4> www.devicevulnerabilitychecker.com </h4>
+						<img src="images/dvc2.png" />
+					</section>
+					<section>
+						<h4>  </h4>
+						<img src="images/automate.jpg" />
+						<img src="images/unit.png" />
+					</section>
+					<section>
+						<h4>  </h4>
+						<img src="images/unit_test.png" />
+					</section>
+					<section>
+						<h4>  FIN  </h4>
+					</section>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
